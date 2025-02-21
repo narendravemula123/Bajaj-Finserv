@@ -16,10 +16,14 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input }),
       });
+      if (!res.ok) {
+        throw new Error("Failed to fetch response");
+      }
       const data = await res.json();
       setResponse(data);
     } catch (error) {
       console.error("Error fetching response:", error);
+      setResponse({ message: "Error processing request" });
     } finally {
       setLoading(false);
     }
